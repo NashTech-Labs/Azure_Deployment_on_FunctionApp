@@ -1,0 +1,57 @@
+parameters:
+- name: connectedServiceNameARM
+  type: string
+- name: appType
+  type: string
+- name: functionAppName
+  type: string
+- name: packageId
+  type: string 
+- name: deployToSlotOrASE
+  type: boolean
+  default: false
+- name: resourceGroupName
+  type: string
+  default: ''
+- name: slotName
+  type: string
+  default: ''
+- name: appSettings
+  type: string
+  default: ''
+- name: deploymentMethod
+  type: string
+  default: 'runFromPackage'
+- name: runtimeStack
+  type: string
+  default: ''
+
+steps:
+- ${{ if eq( parameters.appType, 'functionApp') }}:
+  - task: AzureFunctionApp@2
+    inputs:
+      connectedServiceNameARM: ${{ parameters.connectedServiceNameARM }}
+      appType: ${{ parameters.appType }}
+      appName: ${{ parameters.functionAppName }}
+      package: ${{ parameters.packageId }}.*
+      deployToSlotOrASE: ${{ parameters.deployToSlotOrASE }}
+      resourceGroupName: ${{ parameters.resourceGroupName }}
+      slotName: ${{ parameters.slotName }}
+      appSettings: ${{ parameters.appSettings }}
+      deploymentMethod: ${{ parameters.deploymentMethod }}
+    displayName: Deploy Azure Function on functionApp
+
+- ${{ elseif eq( parameters.appType, 'functionAppLinux') }}:
+  - task: AzureFunctionApp@2
+    inputs:
+      connectedServiceNameARM: ${{ parameters.connectedServiceNameARM }}
+      appType: ${{ parameters.appType }}
+      appName: ${{ parameters.functionAppName }}
+      package: ${{ parameters.packageId }}.*
+      deployToSlotOrASE: ${{ parameters.deployToSlotOrASE }}
+      resourceGroupName: ${{ parameters.resourceGroupName }}
+      slotName: ${{ parameters.slotName }}
+      runtimeStack: ${{ parameters.runtimeStack }}
+      appSettings: ${{ parameters.appSettings }}
+      deploymentMethod: ${{ parameters.deploymentMethod }}
+    displayName: Deploy Azure Function on functionAppLinux
