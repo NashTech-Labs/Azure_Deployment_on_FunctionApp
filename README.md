@@ -9,7 +9,7 @@ The pipeline requires the following parameters to be defined:
 
 
 | Name | type | Default | Required/Optional | Comments |
-| :-------------: | :-------------: | ------------- | :-------------: | :-------------: |
+| :-------------: | :-------------: | :-------------: | :-------------: | :------------- |
 | connectedServiceNameARM | String |   | Required | Select the Azure Resource Manager subscription for the deployment |
 | appType | string | functionApp  | Required | Allowed values: functionApp (Function App on Windows), functionAppLinux (Function App on Linux) |
 | functionAppName | string |  | Required | Specify the name of an existing Azure Functions App. The Function Apps listed will be based on the selected app type |
