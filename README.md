@@ -20,3 +20,35 @@ The pipeline requires the following parameters to be defined:
 | slotName | String | ''  | Optional | Required when deployToSlotOrASE = true |
 | appSettings | String | ''  | Optional | Enter the application settings using the syntax -key value |
 | runtimeStack | String | ''  | Optional | Use when appType = functionAppLinux | 
+
+These parameters provide multiple use case options for the template, enable/disable flags for the utilization of different templates as per the requirements.
+
+
+## Use Cases
+
+You can directly call a particular template as per the requirement. for example: 
+
+  ```yaml
+  # azure-pipeline.yml
+  resources:
+  repositories:
+    - repository: Template
+      type: github
+      name: your_username/Azure_Deployment_on_FunctionApp
+      ref: <respective branch name>
+      endpoint: 'githubServiceConnectioNname'
+
+  steps:
+  # passing the parameters
+  - template: Azure_Deployment_on_FunctionApp.yml
+    parameters:
+        connectedServiceNameARM: ${{ parameters.connectedServiceNameARM }}
+        appType: ${{ parameters.appType }}
+        functionAppName: ${{ parameters.functionAppName }}
+        packageId: ${{ parameters.targetPath }}/${{ parameters.packageId }}
+        deploymentMethod: ${{ parameters.deploymentMethod }}
+        
+  
+Make sure to adjust the repository name, branch name, and parameter values according to your project's requirements.
+
+  ```
